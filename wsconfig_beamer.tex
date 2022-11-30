@@ -1,0 +1,215 @@
+% =====================================================================
+% This file's purpose is to organize dependencies, package load and
+% document configuration outside the main file, which will isolate
+% LaTeX code from content text. There are sections here by each
+% plugin and config function. You can comment packages and configs
+% if they are not necessary in your LaTeX document.
+% Please, be aware that this section is invoked on the PREAMBLE,
+% right after the document class.
+
+% This document contains code only, not text content:
+% spell-checker: disable
+
+% =====================================================================
+% This section defines settings related to the document pages 
+% like margins and spaces.
+
+\usepackage{microtype}  % For better text alignment
+\usepackage{fetchcls}  % Allow decisions based on class name
+\usepackage{ifthen}  % Allow decisions based on conditions
+\usepackage{afterpage}  % Allow other packages to apply logic by page
+\usepackage{geometry}  % This package allows selecting margins size
+\usepackage{setspace}  % Allows selecting line spacing
+\usepackage{anyfontsize}  % Allows custom font sizes
+
+% =====================================================================
+% This section is dedicated to graphical elements, like formulas
+% and images. The packages here helps to configure those visual
+% elements.
+
+% American Mathematical Society packages:
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+% To have acronyms and glossaries working:
+\usepackage[printonlyused]{acronym}
+% \renewcommand*\acffont{\textit}  % change the style of long acms
+% \renewcommand*\acsfont{\textit}  % change the style of short acms
+
+% Use and create colors definitions (with tables support moved to beamer):
+\usepackage{xcolor}
+
+% Insert pictures, make drawings and plots:
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+
+% Save your images here:
+\graphicspath{ {./images/} }
+
+% This will define colors that can be used as a theme:
+\definecolor{fgcolor}{HTML}{FFFFFF}
+\definecolor{bgcolor}{HTML}{243A5E}
+\definecolor{c1color}{HTML}{336699}
+\definecolor{c2color}{HTML}{EFFEFF}
+\definecolor{c3color}{HTML}{4488BB}
+
+% This will set the theme aspect by changing sizes and colors:
+\setbeamerfont{title}{size=\Huge}  % Title slides
+\setbeamerfont{subtitle}{size=\Large}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{institute}{size=\large}
+\setbeamerfont{date}{size=\tiny}
+\setbeamerfont{footline}{size=\tiny}
+%
+\setbeamerfont{frametitle}{size=\Large}  % Regular slides
+\setbeamerfont{framesubtitle}{size=\small}
+%
+\setbeamercolor*{background canvas}{bg=bgcolor}  % Colors
+\setbeamercolor*{title}{fg=fgcolor}
+\setbeamercolor*{subtitle}{fg=fgcolor}
+\setbeamercolor*{footline}{fg=c3color}
+\setbeamercolor{frametitle-left}{fg=fgcolor}
+\setbeamercolor{frametitle}{fg=fgcolor}
+\setbeamercolor*{itemize item}{fg=c1color}
+\setbeamercolor*{itemize subitem}{fg=c1color}
+\setbeamercolor*{normal text}{fg=fgcolor}
+
+% =====================================================================
+% This section defines text and font related tweaks.
+
+\usepackage{lipsum}  % For generating dummy text
+\usepackage{url}  % For parsing URLs and creating links
+% \usepackage[utf8]{inputenc}  % For typing directly special chars
+% \usepackage[T1]{fontenc}  % For typing directly special chars
+\usepackage{lmodern}  % Latin Modern font
+\usepackage{nomencl}  % For creating a symbols list
+\usepackage{csquotes}  % For easier text quoting
+\usepackage{siunitx}  % A better way of writing things with units
+
+% Select TTF Fonts from OS:
+\usepackage{fontspec}
+\setsansfont{Segoe UI}
+% \setmainfont{Times New Roman}
+% \setmonofont{Inconsolata}
+\usefonttheme[onlymath]{serif}
+
+% =====================================================================
+% This section configures the behavior for references, cites, etc.
+% For this configuration the package BibLatex (with Biber back-end)
+% has been selected. The references will be included in a single
+% file called "references.bib".
+
+% Select the proper citation style:
+\usepackage[backend=biber,backref=true,style=numeric]{biblatex}
+% \usepackage[backend=biber,backref=true,style=authoryear]{biblatex}
+% \usepackage[backend=biber,backref=true,style=alphabetic]{biblatex}
+% \usepackage[backend=biber,backref=true,style=ieee]{biblatex}
+% \usepackage[backend=biber,backref=true,style=science]{biblatex}
+% \usepackage[backend=biber,backref=true,style=abnt]{biblatex}
+% \usepackage[backend=biber,backref=true,style=abnt-numeric]{biblatex}
+
+% The file with bibliographic references:
+\addbibresource{references.bib}  % <-- Include your references on this file!
+
+% This package creates links (internal and external) in your
+% final PDF file, connected to your references:
+\usepackage{hyperref}
+
+% This will create links to references and URLs
+% and also display in which page a reference is cited.
+% Customize the language according to your needs:
+\DefineBibliographyStrings{brazilian}{
+    backrefpage={Citado na página },
+    backrefpages={Citado nas páginas }
+}
+
+% The default links colors are ugly, this way is better.
+% Also, let's set some options to create a good PDF file:
+\makeatletter
+\hypersetup{
+    colorlinks=true,
+    linkcolor=c3color,
+    filecolor=c3color,
+    citecolor=c3color,
+    urlcolor=c3color,
+}
+
+% =====================================================================
+% This section defines some packages for beautiful details, like fancy
+% headers, footers, chapters and boxes.
+
+% Enable Fancy Headers (requires additional configuration),
+% and then use the commands \fancyhead and \fancyfoot:
+\usepackage{fancyhdr}  % Fancy headers
+
+% Enable Fancy Chapters on report class. Select one style:
+% Sonny, Lenny, Glenn, Conny, Rejne, and Bjarne.
+\ifthenelse{\equal{\classname}{report}}
+{\usepackage[Sonny]{fncychap}}
+{}  % Does not work well on memoir, abntex2 and some other classes.
+
+% This enables \fbox, \shadowbox, \doublebox, \ovalbox and \Ovalbox:
+\usepackage{fancybox}
+
+% This package allows one to write poems and epigraphs easily like
+% \epigraph{``Begin at the beginning, the King said gravely,
+% and go on till you come to the end: then stop.''}
+% {---Lewis Carroll, \textit{Alice in Wonderland}}
+\usepackage{epigraph}
+
+% For better code syntax highlighting, use listings. For example,
+% a frame with code in Python with line numbers can be done with
+% \begin{lstlisting}[frame=single,language=Python, numbers=left]
+% It can be used with tcolorbox for creating amazing colorful boxes:
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+% These packages help to improve the tables building:
+\usepackage{array}  % Offers more flexible column formatting
+\usepackage{booktabs}  % Supports professional looking tables
+\usepackage{tabularx}  % Columns that expands to fill
+\usepackage{multirow}  % Lets tabular material span multiple rows
+\usepackage{array}  % Provides tabular that can split across pages
+
+% =====================================================================
+% This section defines something that seems to be very brute and needs
+% to be used wisely... some packages have well-known warnings that may
+% disturb you. They can be ignored here.
+
+\usepackage{silence}
+\WarningsOff[biblatex]
+
+% =====================================================================
+% This section defines Custom Commands, for leaving the main TEX file
+% clean and simple, at least for the preamble instructions.
+
+\renewcommand{\chaptername}{Capítulo}
+\renewcommand{\contentsname}{Sumário}
+
+
+% =====================================================================
+% This will define footer. Change for your copyright
+% or footer message including or not a logo.
+
+\setbeamertemplate{footline}[text line]{
+    \parbox{0.95\linewidth}{
+        \vspace*{-4em}
+        Slide \insertpagenumber
+        \hfill
+        2022 - Wesley R. Corporation.
+        Free for using, copying and modifying.
+        \hfill
+        \includegraphics[width=0.1\textwidth]{logos/logo_white.png}
+    }}
+\setbeamertemplate{navigation symbols}{}
+
+% =====================================================================
+% This section defines code that will run right after \begin{document}.
+
+% \AtBeginDocument{
+% }
+
+% =====================================================================
